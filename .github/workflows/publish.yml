@@ -53,6 +53,8 @@ jobs:
         env:
           REDDITREACTION_PAGE_ID: ${{ secrets.REDDITREACTION_PAGE_ID }}
           REDDITREACTION_PAGE_TOKEN: ${{ secrets.REDDITREACTION_PAGE_TOKEN }}
+          REDDITREACTION_IG_USER_ID: ${{ secrets.REDDITREACTION_IG_USER_ID }}
+          IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/images
         run: |
           python -m src.publish status
           python -m src.publish run ${{ steps.mode.outputs.flag }}

@@ -1,8 +1,12 @@
-"""Publisher entrypoint -- Facebook only.
+"""Publisher entrypoint -- Facebook and Instagram.
 
-Posts are published live (not via Meta's native scheduler) at the moment
-their slot is due, so the verdict comment can resolve the post's story id
-right after. Nothing publishes unless --live is passed.
+Both post live at slot time (no native scheduler in play here). Facebook
+takes image bytes directly; Instagram needs a public URL, so images must be
+committed and served via raw.githubusercontent.com (set IMAGE_BASE_URL).
+
+Each story gets two independent state entries -- "{post_id}:fb" and
+"{post_id}:ig" -- since the two platforms publish, fail, and get commented
+on independently of each other.
 
     python -m src.publish status
     python -m src.publish run --live
@@ -35,11 +39,20 @@ def log(msg):
 
 
 def image_for(post: dict) -> Path:
-    """The situation card, rendering it now if a CI checkout doesn't have it."""
+    """The situation card, rendering it now if somehow missing on disk."""
     img = IMAGES / post["situation_image"]
     if img.exists():
         return img
     return render.render_situation(post, img)
+
+
+def image_url(post: dict) -> str:
+    base = os.environ.get("IMAGE_BASE_URL", "").rstrip("/")
+    if not base:
+        raise RuntimeError(
+            "IMAGE_BASE_URL is not set. Instagram needs a public URL for the "
+            "image, e.g. https://raw.githubusercontent.com/<owner>/<repo>/main/images")
+    return f"{base}/{post['situation_image']}"
 
 
 def load_plan(path=PLAN_PATH):
@@ -56,42 +69,60 @@ def cmd_run(args, plan, st):
     now = now_et()
     max_late = dt.timedelta(minutes=args.max_late)
 
-    due = [p for p in plan if not st.is_done(p["post_id"])
-           and p["_publish_at"] <= now <= p["_publish_at"] + max_late]
-    stale = [p for p in plan if not st.is_done(p["post_id"])
-             and p["_publish_at"] + max_late < now]
+    due = [p for p in plan if p["_publish_at"] <= now <= p["_publish_at"] + max_late
+           and (not st.is_done(f"{p['post_id']}:fb") or not st.is_done(f"{p['post_id']}:ig"))]
+    stale = [p for p in plan if p["_publish_at"] + max_late < now
+             and (not st.is_done(f"{p['post_id']}:fb") or not st.is_done(f"{p['post_id']}:ig"))]
 
     for p in stale:
         late = int((now - p["_publish_at"]).total_seconds() // 60)
-        log(f"  {'SKIP' if args.live else 'DRY  SKIP'} {p['post_id']} "
-            f"missed by {late} min")
-        if args.live:
-            st.record_skipped(p["post_id"], "Facebook", p["publish_at"],
-                              f"missed by {late} min (tolerance {args.max_late})")
+        for platform, key in (("Facebook", "fb"), ("Instagram", "ig")):
+            sid = f"{p['post_id']}:{key}"
+            if st.is_done(sid):
+                continue
+            log(f"  {'SKIP' if args.live else 'DRY  SKIP'} {sid} missed by {late} min")
+            if args.live:
+                st.record_skipped(sid, platform, p["publish_at"],
+                                  f"missed by {late} min (tolerance {args.max_late})")
     if stale and args.live:
         st.save()
 
-    log(f"{len(due)} Facebook posts due")
+    log(f"{len(due)} stories due")
     creds = meta.credentials() if args.live else None
     failures = 0
 
     for p in due:
+        fb_id = f"{p['post_id']}:fb"
+        ig_id = f"{p['post_id']}:ig"
+
         if not args.live:
-            have = "img" if (IMAGES / p["situation_image"]).exists() else "render-on-publish"
-            log(f"  DRY  {p['post_id']} {p['_publish_at']:%m-%d %H:%M} [{have}]")
-            continue
-        try:
-            img = image_for(p)
-            rid = meta.fb_photo(creds["page_id"], creds["token"], img, p["caption"])
-            st.record_post(p["post_id"], "Facebook", rid)
-            st.queue_comment(p["post_id"], p["_comment_due_at"],
-                             p["comment_message"], "Facebook")
-            log(f"  OK   {p['post_id']} posted -> {rid}")
-        except Exception as e:
-            failures += 1
-            st.record_failure(p["post_id"], e)
-            log(f"  FAIL {p['post_id']}: {e}")
-        st.save()
+            log(f"  DRY  {p['post_id']} {p['_publish_at']:%m-%d %H:%M}")
+        else:
+            if not st.is_done(fb_id):
+                try:
+                    img = image_for(p)
+                    rid = meta.fb_photo(creds["page_id"], creds["token"], img, p["caption"])
+                    st.record_post(fb_id, "Facebook", rid)
+                    st.queue_comment(fb_id, p["_comment_due_at"], p["comment_message"], "Facebook")
+                    log(f"  OK   {fb_id} posted -> {rid}")
+                except Exception as e:
+                    failures += 1
+                    st.record_failure(fb_id, e)
+                    log(f"  FAIL {fb_id}: {e}")
+                st.save()
+
+            if not st.is_done(ig_id):
+                try:
+                    url = image_url(p)
+                    rid = meta.ig_image(creds["ig_user_id"], creds["token"], url, p["caption"])
+                    st.record_post(ig_id, "Instagram", rid)
+                    st.queue_comment(ig_id, p["_comment_due_at"], p["comment_message"], "Instagram")
+                    log(f"  OK   {ig_id} posted -> {rid}")
+                except Exception as e:
+                    failures += 1
+                    st.record_failure(ig_id, e)
+                    log(f"  FAIL {ig_id}: {e}")
+                st.save()
 
     failures += _run_comments(args, st, creds)
     st.save()
@@ -110,10 +141,13 @@ def _run_comments(args, st, creds):
             target = st.remote_id(post_id)
             if not target:
                 raise RuntimeError("no remote id recorded for the parent post")
-            story = meta.fb_story_id(target, creds["token"])
-            if not story:
-                raise RuntimeError("parent post is not live yet")
-            rid = meta.fb_comment(story, creds["token"], c["message"])
+            if c["platform"] == "Facebook":
+                story = meta.fb_story_id(target, creds["token"])
+                if not story:
+                    raise RuntimeError("parent post is not live yet")
+                rid = meta.fb_comment(story, creds["token"], c["message"])
+            else:
+                rid = meta.ig_comment(target, creds["token"], c["message"])
             st.mark_comment(post_id, "posted", rid)
             log(f"  OK   comment on {post_id} -> {rid}")
         except Exception as e:
@@ -128,19 +162,21 @@ def cmd_status(args, plan, st):
     counts, pending = st.summary()
     upcoming = [p for p in plan if p["_publish_at"] > now]
 
-    missing_images = [p for p in plan
-                      if not (IMAGES / p["situation_image"]).exists()
-                      or not (IMAGES / p["verdict_image"]).exists()]
+    missing_images = [p for p in plan if not (IMAGES / p["situation_image"]).exists()]
 
     if plan:
-        log(f"plan: {len(plan)} posts, {plan[0]['_publish_at']:%Y-%m-%d} "
-            f"to {plan[-1]['_publish_at']:%Y-%m-%d}")
+        log(f"plan: {len(plan)} stories, {plan[0]['_publish_at']:%Y-%m-%d} "
+            f"to {plan[-1]['_publish_at']:%Y-%m-%d} (x2 platforms = "
+            f"{len(plan) * 2} posts)")
     log(f"upcoming: {len(upcoming)}   recorded: {sum(counts.values())} {counts}")
     log(f"verdict comments pending: {pending}")
-    log(f"images pre-rendered locally: {len(plan) - len(missing_images)}/{len(plan)} "
-        f"(not required -- publish renders on demand if missing)")
+    log(f"images committed: {len(plan) - len(missing_images)}/{len(plan)}")
+    if missing_images:
+        log(f"  MISSING for: {', '.join(p['post_id'] for p in missing_images[:5])}"
+            f"{' ...' if len(missing_images) > 5 else ''} -- Instagram will 404 on these")
 
-    for key in ("REDDITREACTION_PAGE_ID", "REDDITREACTION_PAGE_TOKEN"):
+    for key in ("REDDITREACTION_PAGE_ID", "REDDITREACTION_PAGE_TOKEN",
+                "REDDITREACTION_IG_USER_ID", "IMAGE_BASE_URL"):
         log(f"env {key}: {'set' if os.environ.get(key) else 'MISSING'}")
 
     token = os.environ.get("REDDITREACTION_PAGE_TOKEN")

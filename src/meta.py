@@ -1,6 +1,6 @@
-"""Meta Graph API calls for Facebook Page publishing -- FB only, no IG this
-pilot. Trimmed from automation/wildnatureusa/src/meta.py (same Graph API
-calls; credentials() and REQUIRED_SCOPES point at RedditReaction's page).
+"""Meta Graph API calls for Facebook Page + Instagram Business publishing.
+Adapted from automation/wildnatureusa/src/meta.py; credentials() and
+REQUIRED_SCOPES point at RedditReaction's page/IG account.
 """
 import os
 import time
@@ -52,19 +52,56 @@ def fb_comment(object_id, token, message):
     return _check(r, "fb_comment")["id"]
 
 
+# --- Instagram ------------------------------------------------------------
+def ig_image(ig_user_id, token, image_url, caption, poll_seconds=90):
+    """Publish an image post. image_url must be publicly reachable by Meta."""
+    r = requests.post(f"{GRAPH}/{ig_user_id}/media",
+                      data={"image_url": image_url, "caption": caption,
+                            "access_token": token}, timeout=TIMEOUT)
+    container = _check(r, "ig_container")["id"]
+
+    deadline = time.time() + poll_seconds
+    while time.time() < deadline:
+        s = requests.get(f"{GRAPH}/{container}",
+                         params={"fields": "status_code", "access_token": token},
+                         timeout=TIMEOUT)
+        code = _check(s, "ig_status").get("status_code")
+        if code == "FINISHED":
+            break
+        if code == "ERROR":
+            raise MetaError(f"ig processing failed for container {container}")
+        time.sleep(5)
+
+    p = requests.post(f"{GRAPH}/{ig_user_id}/media_publish",
+                      data={"creation_id": container, "access_token": token},
+                      timeout=TIMEOUT)
+    return _check(p, "ig_publish")["id"]
+
+
+def ig_comment(media_id, token, message):
+    """Needs the instagram_manage_comments permission."""
+    r = requests.post(f"{GRAPH}/{media_id}/comments",
+                      data={"message": message, "access_token": token},
+                      timeout=TIMEOUT)
+    return _check(r, "ig_comment")["id"]
+
+
 def credentials():
-    need = ["REDDITREACTION_PAGE_ID", "REDDITREACTION_PAGE_TOKEN"]
+    need = ["REDDITREACTION_PAGE_ID", "REDDITREACTION_PAGE_TOKEN",
+            "REDDITREACTION_IG_USER_ID"]
     missing = [k for k in need if not os.environ.get(k)]
     if missing:
         raise MetaError(f"missing environment variables: {', '.join(missing)}")
     return {
         "page_id": os.environ["REDDITREACTION_PAGE_ID"],
         "token": os.environ["REDDITREACTION_PAGE_TOKEN"],
+        "ig_user_id": os.environ["REDDITREACTION_IG_USER_ID"],
     }
 
 
 REQUIRED_SCOPES = ["pages_show_list", "pages_read_engagement", "pages_manage_posts",
-                   "pages_manage_engagement"]
+                   "pages_manage_engagement", "instagram_basic",
+                   "instagram_content_publish", "instagram_manage_comments"]
 
 
 def debug_token(token):

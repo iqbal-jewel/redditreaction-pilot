@@ -1,9 +1,7 @@
-# Situation/verdict cards are rendered on demand and posted as raw bytes to
-# Facebook -- no public URL needed, so (unlike wildnatureusa's IG images)
-# nothing here needs to be committed for publishing to work.
-images/*.png
-!images/demo_situation.png
-!images/demo_verdict.png
+# Situation/verdict cards are committed: Instagram fetches images by public
+# URL (raw.githubusercontent.com), so an uncommitted render would 404 there,
+# even though Facebook itself takes raw bytes and needs no URL at all. Same
+# reasoning as wildnatureusa's IG images.
 
 __pycache__/
 *.pyc
