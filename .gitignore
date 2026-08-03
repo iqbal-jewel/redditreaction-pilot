@@ -1,0 +1,11 @@
+# Situation/verdict cards are rendered on demand and posted as raw bytes to
+# Facebook -- no public URL needed, so (unlike wildnatureusa's IG images)
+# nothing here needs to be committed for publishing to work.
+images/*.png
+!images/demo_situation.png
+!images/demo_verdict.png
+
+__pycache__/
+*.pyc
+.env
+build_plan*.log

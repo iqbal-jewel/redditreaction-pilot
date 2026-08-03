@@ -1,0 +1,66 @@
+name: publish
+
+# Runs hourly. Each run is a no-op unless something is due. Facebook has no
+# server-side scheduling used here (unlike wildnatureusa) -- posts go out
+# live at their slot, immediately followed by the verdict-comment queue, so
+# --max-late tolerates a late run rather than a missed slot silently vanishing.
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+    inputs:
+      live:
+        description: "Actually publish (otherwise dry run)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # Scheduled runs publish only when the repo variable PUBLISH_ENABLED is
+      # "true", so merging this workflow does not by itself start posting.
+      - name: Decide mode
+        id: mode
+        env:
+          ENABLED: ${{ vars.PUBLISH_ENABLED }}
+          MANUAL_LIVE: ${{ inputs.live }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            [ "$MANUAL_LIVE" = "true" ] && echo "flag=--live" >> "$GITHUB_OUTPUT" || echo "flag=" >> "$GITHUB_OUTPUT"
+          else
+            [ "$ENABLED" = "true" ] && echo "flag=--live" >> "$GITHUB_OUTPUT" || echo "flag=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish
+        env:
+          REDDITREACTION_PAGE_ID: ${{ secrets.REDDITREACTION_PAGE_ID }}
+          REDDITREACTION_PAGE_TOKEN: ${{ secrets.REDDITREACTION_PAGE_TOKEN }}
+        run: |
+          python -m src.publish status
+          python -m src.publish run ${{ steps.mode.outputs.flag }}
+
+      - name: Commit state
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state/state.json
+          git diff --staged --quiet || git commit -m "state: $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
