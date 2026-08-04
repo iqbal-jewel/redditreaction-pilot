@@ -59,7 +59,15 @@ jobs:
           python -m src.publish status
           python -m src.publish run ${{ steps.mode.outputs.flag }}
 
+      # Runs even if Publish exited non-zero (e.g. a comment failed after the
+      # post itself succeeded) -- otherwise a partial failure discards the
+      # successful post's state, and the next run re-publishes it as a
+      # duplicate with no memory of the first one. This is exactly what
+      # happened on 2026-08-04: fb_story_id crashed after both platform
+      # posts had already gone live, the state commit was skipped, and the
+      # manual retry double-posted the same story to Facebook and Instagram.
       - name: Commit state
+        if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
