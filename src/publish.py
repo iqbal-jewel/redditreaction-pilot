@@ -142,10 +142,14 @@ def _run_comments(args, st, creds):
             if not target:
                 raise RuntimeError("no remote id recorded for the parent post")
             if c["platform"] == "Facebook":
-                story = meta.fb_story_id(target, creds["token"])
-                if not story:
-                    raise RuntimeError("parent post is not live yet")
-                rid = meta.fb_comment(story, creds["token"], c["message"])
+                # fb_photo() is called without scheduled_at (this pipeline
+                # publishes live, not via Meta's scheduler), so its response
+                # already carries a commentable post_id -- no page_story_id
+                # resolution step needed. That resolution is only for a
+                # *scheduled* photo, which only has a raw photo id until it
+                # goes live (see wildnatureusa's fb_story_id, which this
+                # pipeline copied from before catching the distinction).
+                rid = meta.fb_comment(target, creds["token"], c["message"])
             else:
                 rid = meta.ig_comment(target, creds["token"], c["message"])
             st.mark_comment(post_id, "posted", rid)
