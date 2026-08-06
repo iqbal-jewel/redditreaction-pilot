@@ -59,6 +59,18 @@
       "remote_id": "18023602790894273",
       "status": "posted",
       "at": "2026-08-06T15:04:47+00:00"
+    },
+    "1r5cluj:fb": {
+      "platform": "Facebook",
+      "remote_id": "381866474998884_122206697204378567",
+      "status": "posted",
+      "at": "2026-08-06T23:46:41+00:00"
+    },
+    "1r5cluj:ig": {
+      "platform": "Instagram",
+      "remote_id": "18116539054935718",
+      "status": "posted",
+      "at": "2026-08-06T23:46:56+00:00"
     }
   },
   "comments": {
@@ -122,13 +134,29 @@
       "due_at": "2026-08-06T16:00:00+00:00",
       "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA but, and I think a lot of us will have the same question. Why in gods name do you wander around with a USB that destroys computers? Are you a spy? Please spill!\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1pj926x/aita_for_my_usb_killer_frying_my_friends_pc_after/",
       "platform": "Facebook",
-      "status": "pending"
+      "status": "posted",
+      "remote_id": "122206662104378567_1669664214722369"
     },
     "1pj926x:ig": {
       "due_at": "2026-08-06T16:00:00+00:00",
       "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA but, and I think a lot of us will have the same question. Why in gods name do you wander around with a USB that destroys computers? Are you a spy? Please spill!\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1pj926x/aita_for_my_usb_killer_frying_my_friends_pc_after/",
       "platform": "Instagram",
-      "status": "pending"
+      "status": "posted",
+      "remote_id": "18121328173759876"
+    },
+    "1r5cluj:fb": {
+      "due_at": "2026-08-06T23:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA\n\nWho lives with someone for free and then complains?! She’s a grown woman who is capable of getting her own place if she has stipulations.\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1r5cluj/aita_for_telling_our_roommate_she_might_need_to/",
+      "platform": "Facebook",
+      "status": "posted",
+      "remote_id": "122206697204378567_1710094546707724"
+    },
+    "1r5cluj:ig": {
+      "due_at": "2026-08-06T23:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA\n\nWho lives with someone for free and then complains?! She’s a grown woman who is capable of getting her own place if she has stipulations.\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1r5cluj/aita_for_telling_our_roommate_she_might_need_to/",
+      "platform": "Instagram",
+      "status": "posted",
+      "remote_id": "18388063954160939"
     }
   }
 }
