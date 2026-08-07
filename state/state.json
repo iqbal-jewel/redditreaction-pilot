@@ -71,6 +71,18 @@
       "remote_id": "18116539054935718",
       "status": "posted",
       "at": "2026-08-06T23:46:56+00:00"
+    },
+    "1mtarwm:fb": {
+      "platform": "Facebook",
+      "remote_id": "381866474998884_122206750784378567",
+      "status": "posted",
+      "at": "2026-08-07T15:42:12+00:00"
+    },
+    "1mtarwm:ig": {
+      "platform": "Instagram",
+      "remote_id": "18027009740842548",
+      "status": "posted",
+      "at": "2026-08-07T15:42:20+00:00"
     }
   },
   "comments": {
@@ -157,6 +169,18 @@
       "platform": "Instagram",
       "status": "posted",
       "remote_id": "18388063954160939"
+    },
+    "1mtarwm:fb": {
+      "due_at": "2026-08-07T16:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA. That's a super weird setting unless they're both major gym rats and I'm always wary about super public proposals, because it feels like the person doing the proposing is applying pressure.\n\nHe asked you, you were honest, and he didn't like your answer. That's 100% on him.  My bestfriend called me shallow  This response actually makes it worse. This feels like the kind of thing that was bas...\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1mtarwm/aita_for_telling_my_bestfriend_i_understood_why/",
+      "platform": "Facebook",
+      "status": "pending"
+    },
+    "1mtarwm:ig": {
+      "due_at": "2026-08-07T16:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA. That's a super weird setting unless they're both major gym rats and I'm always wary about super public proposals, because it feels like the person doing the proposing is applying pressure.\n\nHe asked you, you were honest, and he didn't like your answer. That's 100% on him.  My bestfriend called me shallow  This response actually makes it worse. This feels like the kind of thing that was bas...\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1mtarwm/aita_for_telling_my_bestfriend_i_understood_why/",
+      "platform": "Instagram",
+      "status": "pending"
     }
   }
 }
