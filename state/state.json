@@ -95,6 +95,18 @@
       "remote_id": "18159265213485462",
       "status": "posted",
       "at": "2026-08-07T22:23:34+00:00"
+    },
+    "d7yuot:fb": {
+      "platform": "Facebook",
+      "remote_id": "381866474998884_122206825046378567",
+      "status": "posted",
+      "at": "2026-08-08T15:17:38+00:00"
+    },
+    "d7yuot:ig": {
+      "platform": "Instagram",
+      "remote_id": "18065697848497547",
+      "status": "posted",
+      "at": "2026-08-08T15:17:49+00:00"
     }
   },
   "comments": {
@@ -209,6 +221,18 @@
       "platform": "Instagram",
       "status": "posted",
       "remote_id": "18123054100700819"
+    },
+    "d7yuot:fb": {
+      "due_at": "2026-08-08T16:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA\n\nWELL PLAYED!!!\n\nYou deserve an award, but I’m broke. So here’s an emoji instead. 🏅 🎖 🥇\n\nEDIT:\n\nThanks for the award!\n\nEDIT 2:\n\nThanks for the awards. Yes, I have now been able to give OP an award. Happy days and awesome sauce to all!!\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/d7yuot/aita_for_wearing_the_joke_bikini_my_friend_got_me/",
+      "platform": "Facebook",
+      "status": "pending"
+    },
+    "d7yuot:ig": {
+      "due_at": "2026-08-08T16:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA\n\nWELL PLAYED!!!\n\nYou deserve an award, but I’m broke. So here’s an emoji instead. 🏅 🎖 🥇\n\nEDIT:\n\nThanks for the award!\n\nEDIT 2:\n\nThanks for the awards. Yes, I have now been able to give OP an award. Happy days and awesome sauce to all!!\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/d7yuot/aita_for_wearing_the_joke_bikini_my_friend_got_me/",
+      "platform": "Instagram",
+      "status": "pending"
     }
   }
 }
