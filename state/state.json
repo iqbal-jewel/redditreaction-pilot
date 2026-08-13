@@ -227,6 +227,18 @@
       "remote_id": "18096442943457567",
       "status": "posted",
       "at": "2026-08-13T15:46:55+00:00"
+    },
+    "1ve62j5:fb": {
+      "platform": "Facebook",
+      "remote_id": "381866474998884_122207265050378567",
+      "status": "posted",
+      "at": "2026-08-13T22:29:14+00:00"
+    },
+    "1ve62j5:ig": {
+      "platform": "Instagram",
+      "remote_id": "18102620921350129",
+      "status": "posted",
+      "at": "2026-08-13T22:29:28+00:00"
     }
   },
   "comments": {
@@ -495,6 +507,18 @@
       "platform": "Instagram",
       "status": "posted",
       "remote_id": "18064673846742232"
+    },
+    "1ve62j5:fb": {
+      "due_at": "2026-08-13T23:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA. I'm kinda fat and would prefer if my friend were honest with me about the fit. Even when I was skinny, being told to size up never felt malicious to me. Everyone's different, though. Might not hurt to reach out and talk to her / apologize for it since it seems like a sore spot for her (which is fair). Neither of you did anything wrong. \n\nETA: I say NTA because I don't think your intent was...\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1ve62j5/aitah_for_telling_my_plus_size_friend_to_get_a/",
+      "platform": "Facebook",
+      "status": "pending"
+    },
+    "1ve62j5:ig": {
+      "due_at": "2026-08-13T23:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA. I'm kinda fat and would prefer if my friend were honest with me about the fit. Even when I was skinny, being told to size up never felt malicious to me. Everyone's different, though. Might not hurt to reach out and talk to her / apologize for it since it seems like a sore spot for her (which is fair). Neither of you did anything wrong. \n\nETA: I say NTA because I don't think your intent was...\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1ve62j5/aitah_for_telling_my_plus_size_friend_to_get_a/",
+      "platform": "Instagram",
+      "status": "pending"
     }
   }
 }
