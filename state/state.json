@@ -590,13 +590,15 @@
       "due_at": "2026-08-15T16:00:00+00:00",
       "message": "REDDIT'S VERDICT: INFO — Not Enough Info\n\n\"INFO.\n\nIf you make enough for rent, why not just do it if this is proving difficult?\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1ve9tvv/wibta_if_i_walk_off_a_job/",
       "platform": "Facebook",
-      "status": "pending"
+      "status": "posted",
+      "remote_id": "122207396144378567_923756934104350"
     },
     "1ve9tvv:ig": {
       "due_at": "2026-08-15T16:00:00+00:00",
       "message": "REDDIT'S VERDICT: INFO — Not Enough Info\n\n\"INFO.\n\nIf you make enough for rent, why not just do it if this is proving difficult?\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1ve9tvv/wibta_if_i_walk_off_a_job/",
       "platform": "Instagram",
-      "status": "pending"
+      "status": "posted",
+      "remote_id": "18086975258660205"
     }
   }
 }
