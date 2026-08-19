@@ -798,13 +798,15 @@
       "due_at": "2026-08-19T16:00:00+00:00",
       "message": "REDDIT'S VERDICT: ESH — Everyone Sucks Here\n\n\"ESH move out\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1veh6r0/aita_for_getting_mad_that_my_parents_seemingly/",
       "platform": "Facebook",
-      "status": "pending"
+      "status": "posted",
+      "remote_id": "122207716226378567_28228048723487954"
     },
     "1veh6r0:ig": {
       "due_at": "2026-08-19T16:00:00+00:00",
       "message": "REDDIT'S VERDICT: ESH — Everyone Sucks Here\n\n\"ESH move out\"\n\nFull thread: https://www.reddit.com/r/AmItheAsshole/comments/1veh6r0/aita_for_getting_mad_that_my_parents_seemingly/",
       "platform": "Instagram",
-      "status": "pending"
+      "status": "posted",
+      "remote_id": "18110795132075848"
     }
   }
 }
