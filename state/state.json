@@ -479,6 +479,18 @@
       "remote_id": "18192622447388749",
       "status": "posted",
       "at": "2026-08-23T22:09:13+00:00"
+    },
+    "1uw5o66:fb": {
+      "platform": "Facebook",
+      "remote_id": "381866474998884_122208129932378567",
+      "status": "posted",
+      "at": "2026-08-24T15:27:55+00:00"
+    },
+    "1uw5o66:ig": {
+      "platform": "Instagram",
+      "remote_id": "17903642415517960",
+      "status": "posted",
+      "at": "2026-08-24T15:28:10+00:00"
     }
   },
   "comments": {
@@ -1041,6 +1053,18 @@
       "platform": "Instagram",
       "status": "posted",
       "remote_id": "18113546576078538"
+    },
+    "1uw5o66:fb": {
+      "due_at": "2026-08-24T16:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA. A gift, once given, is no longer the givers.\"\n\nFull thread: https://www.reddit.com/r/AITAH/comments/1uw5o66/aitah_for_refusing_to_return_a_gift/",
+      "platform": "Facebook",
+      "status": "pending"
+    },
+    "1uw5o66:ig": {
+      "due_at": "2026-08-24T16:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA. A gift, once given, is no longer the givers.\"\n\nFull thread: https://www.reddit.com/r/AITAH/comments/1uw5o66/aitah_for_refusing_to_return_a_gift/",
+      "platform": "Instagram",
+      "status": "pending"
     }
   }
 }
