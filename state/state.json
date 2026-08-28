@@ -579,6 +579,18 @@
       "remote_id": "18130631866644956",
       "status": "posted",
       "at": "2026-08-27T23:18:18+00:00"
+    },
+    "1us8aya:fb": {
+      "platform": "Facebook",
+      "remote_id": "381866474998884_122208448694378567",
+      "status": "posted",
+      "at": "2026-08-28T19:41:54+00:00"
+    },
+    "1us8aya:ig": {
+      "platform": "Instagram",
+      "remote_id": "18137520181612286",
+      "status": "posted",
+      "at": "2026-08-28T19:42:07+00:00"
     }
   },
   "comments": {
@@ -1239,6 +1251,20 @@
       "platform": "Instagram",
       "status": "posted",
       "remote_id": "18100364837460970"
+    },
+    "1us8aya:fb": {
+      "due_at": "2026-08-28T16:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA, your brother left his wife and confides in you, because you’re his brother. People gossip and he also probably feels a whole host of feelings ranging from what might be shame and regret to hope and anxiety to depression and doubt.\n\nWhat he’s sharing with you aren’t “juicy details”, but important facets of his life and mental health.\n\nYou’re not treating his discussion as merely “juicy deta...\"\n\nFull thread: https://www.reddit.com/r/AITAH/comments/1us8aya/my_brother_told_me_something_in_confidence_and/",
+      "platform": "Facebook",
+      "status": "posted",
+      "remote_id": "122208448694378567_1388705575943396"
+    },
+    "1us8aya:ig": {
+      "due_at": "2026-08-28T16:00:00+00:00",
+      "message": "REDDIT'S VERDICT: NTA — Not the A**hole\n\n\"NTA, your brother left his wife and confides in you, because you’re his brother. People gossip and he also probably feels a whole host of feelings ranging from what might be shame and regret to hope and anxiety to depression and doubt.\n\nWhat he’s sharing with you aren’t “juicy details”, but important facets of his life and mental health.\n\nYou’re not treating his discussion as merely “juicy deta...\"\n\nFull thread: https://www.reddit.com/r/AITAH/comments/1us8aya/my_brother_told_me_something_in_confidence_and/",
+      "platform": "Instagram",
+      "status": "posted",
+      "remote_id": "18116059453967959"
     }
   }
 }
